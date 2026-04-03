@@ -71,10 +71,10 @@ public class Main {
 			actividadMaisRealizada();
 			break;
 		case "2":
-			masRealizadaCdaUsuario();
+			maisRealizadaCdaUsuario();
 			break;
 		case "3":
-			masProcrastinador();
+			maisProcrastinador();
 			break;
 		case "4":
 			verActividades();
@@ -98,19 +98,19 @@ public class Main {
   for (int i = 0; i < registroContador; i++) {
       System.out.println((i + 1) + ") Usuario: " + id[i] + 
                          " | Fecha: " + fecha[i] + 
-                         " | Duracion: " + horas[i] + " hora(s)" + 
+                         " | Duracion: " + horas[i] + " hora/s" + 
                          " | Actividad: " + actividades[i]);
   }
   
   System.out.println("-----------------------------------------");
 	}
 
-	private static void masProcrastinador() {
+	private static void maisProcrastinador() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'masProcrastinador'");
 	}
 
-	private static void masRealizadaCdaUsuario() {
+	private static void maisRealizadaCdaUsuario() {
 		// TODO Auto-generated method stub
 		throw new UnsupportedOperationException("Unimplemented method 'masRealizadaCdaUsuario'");
 	}
