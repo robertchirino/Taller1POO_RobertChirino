@@ -62,9 +62,10 @@ public class Main {
 	private static void menuAnalisis() {
 		String opc;
 		do{
-		System.out.println("Bienvenido al menu de analisis!\r\n" + "\r\n" + "Que deseas realizar?\r\n" + "\r\n"
+		System.out.println("\r\n" + "Bienvenido al menu de analisis\r\n"  + "Que deseas realizar?\r\n"
 				+ "1) Actividad mas realizada\r\n" + "2) Actividad mas realizada por cada usuario\r\n"
 				+ "3) Usuario con mayor procastinacion\r\n" + "4) Ver todas las actividades\r\n" + "5) volver");
+		System.out.print("opcion: ");
 		opc = sc.nextLine();
 		switch (opc) {
 		case "1":
@@ -88,6 +89,7 @@ public class Main {
 	}
 
 	private static void verActividades() {
+		System.out.println(" ");
 		System.out.println("Todas las Actividades ");
   
   if (registroContador == 0) {
@@ -97,27 +99,115 @@ public class Main {
 
   for (int i = 0; i < registroContador; i++) {
       System.out.println((i + 1) + ") Usuario: " + id[i] + 
-                         " | Fecha: " + fecha[i] + 
-                         " | Duracion: " + horas[i] + " hora/s" + 
-                         " | Actividad: " + actividades[i]);
+                         " / Fecha: " + fecha[i] + 
+                         " / Duracion: " + horas[i] + " hora/s" + 
+                         " / Actividad: " + actividades[i]);
   }
   
-  System.out.println("-----------------------------------------");
+  System.out.println(" ");
 	}
-
 	private static void maisProcrastinador() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'masProcrastinador'");
+		System.out.println(" ");
+    int[] horasAcumuladas = new int[totalUsuarios];
+    for (int i = 0; i < registroContador; i++) {
+        String usuarioDelRegistro = id[i];
+        int horasDelRegistro = horas[i];
+
+        for (int j = 0; j < totalUsuarios; j++) {
+            if (nombresUsuarios[j] != null && nombresUsuarios[j].equals(usuarioDelRegistro)) {
+                horasAcumuladas[j] += horasDelRegistro;
+                break; 
+            }
+        }
+    }
+    int maxHoras = -1;
+    String maisProcrastinador = "";
+    for (int j = 0; j < totalUsuarios; j++) {
+        if (horasAcumuladas[j] > maxHoras) {
+            maxHoras = horasAcumuladas[j];
+            maisProcrastinador = nombresUsuarios[j];
+        }
+    }
+    System.out.println("el mais procrastinador es: " + maisProcrastinador);
+    System.out.println("Con " + maxHoras + " horas procrastinadas");
 	}
 
 	private static void maisRealizadaCdaUsuario() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'masRealizadaCdaUsuario'");
+		System.out.println(" ");
+		for (int i = 0; i < totalUsuarios; i++) {
+        String usuarioEvaluado = nombresUsuarios[i];
+        String[] actividadesUnicas = new String[registroContador];
+        int[] conteo = new int[registroContador];
+        int totalUnicas = 0;
+        for (int j = 0; j < registroContador; j++) {
+            if (id[j].equals(usuarioEvaluado)) {
+                String actActual = actividades[j].trim().toLowerCase();
+                boolean encontrada = false;
+                for (int k = 0; k < totalUnicas; k++) {
+                    if (actividadesUnicas[k].equals(actActual)) {
+                        conteo[k]++;
+                        encontrada = true;
+                        break;
+                    }
+                }
+                if (!encontrada) {
+                    actividadesUnicas[totalUnicas] = actActual;
+                    conteo[totalUnicas] = 1;
+                    totalUnicas++;
+                }
+            }
+        }
+        if (totalUnicas > 0) {
+            int maxConteo = -1;
+            String actividadTop = "";
+
+            for (int j = 0; j < totalUnicas; j++) {
+                if (conteo[j] > maxConteo) {
+                    maxConteo = conteo[j];
+                    actividadTop = actividadesUnicas[j];
+                }
+            }
+            System.out.println("->" + usuarioEvaluado + " actividad mas realizada: '" + actividadTop + "' (" + maxConteo + " veces)");
+        } else {
+            System.out.println("->" + usuarioEvaluado + " no tiene actividades ");
+        }
+    }
 	}
 
 	private static void actividadMaisRealizada() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'actividadMaisRealizada'");
+		System.out.println(" ");
+		System.out.println("Actividad mas realizada por los usuarios: ");
+		String[] actividadesUnicas = new String[registroContador];
+    int[] conteo = new int[registroContador];
+    int totalUnicas = 0;
+    for (int i = 0; i < registroContador; i++) {
+        String actActual = actividades[i].trim().toLowerCase(); 
+        boolean encontrada = false;
+        for (int j = 0; j < totalUnicas; j++) {
+            if (actividadesUnicas[j].equals(actActual)) {
+                conteo[j]++; 
+                encontrada = true;
+                break;
+            }
+        }
+        if (!encontrada) {
+            actividadesUnicas[totalUnicas] = actActual;
+            conteo[totalUnicas] = 1; 
+            totalUnicas++;
+        }
+    }
+
+    int maxConteo = -1;
+    String actividadTop = "";
+
+    for (int i = 0; i < totalUnicas; i++) {
+        if (conteo[i] > maxConteo) {
+            maxConteo = conteo[i];
+            actividadTop = actividadesUnicas[i];
+        }
+    }
+    System.out.println("La actividad mas realizada es: '" + actividadTop + "'");
+    System.out.println("con un total de " + maxConteo + " vez/veces.");
 	}
 
 	private static void menuUsuario() throws FileNotFoundException {
